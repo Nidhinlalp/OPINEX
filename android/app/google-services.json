@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "715926020479",
+    "project_id": "redite-clone",
+    "storage_bucket": "redite-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715926020479:android:0cf45713648bea7c90ba4a",
+        "android_client_info": {
+          "package_name": "com.example.redite_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715926020479-es5hek6n6l2fh5uoviud6bng8mb28qqf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.redite_clone",
+            "certificate_hash": "bb42edcb894c013a02111b50f0ba45fa7786de54"
+          }
+        },
+        {
+          "client_id": "715926020479-ki4bhr60kj8jplqg8aqn6orthlm0mpth.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcDwAVNPhNa1DCkAK6kiXH3tDQLxVXdcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715926020479-ki4bhr60kj8jplqg8aqn6orthlm0mpth.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "715926020479-bb5n14g4lj1j2prmjuv6bo8d2iki26dj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rediteClone"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
