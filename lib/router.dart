@@ -12,6 +12,7 @@ import 'package:routemaster/routemaster.dart';
 
 import 'features/community/screen/add_mods_screen.dart';
 import 'features/community/screen/mod_tools_screen.dart';
+import 'features/post/screen/add_post_screen.dart';
 import 'features/user_profile/screens/user_profile_screen.dart';
 
 final loggedOutRoute = RouteMap(routes: {
@@ -54,6 +55,9 @@ final loggedIntRoute = RouteMap(routes: {
         child: AddPostTypeScreen(
           type: routeData.pathParameters['type']!,
         ),
+      ),
+  '/add-post': (routeData) => const MaterialPage(
+        child: AddPostScreen(),
       ),
   '/post/:postId/comments': (route) => MaterialPage(
         child: CommentsScreen(
