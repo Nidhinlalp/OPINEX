@@ -84,7 +84,7 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
             link: _linkController.text.trim(),
           );
     } else {
-      showSnackBar(context, 'Please enter all the fields');
+      showSnackBar(context: context, text: 'Please enter all the fields');
     }
   }
 

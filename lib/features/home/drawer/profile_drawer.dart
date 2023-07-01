@@ -1,3 +1,4 @@
+import 'package:redite_clone/features/privacy_polycy/screens/privacy.dart';
 import 'package:redite_clone/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,7 @@ class ProfileDrawer extends ConsumerWidget {
   const ProfileDrawer({super.key});
 
   void logOut(WidgetRef ref) {
-    ref.read(authControllerProvider.notifier).logOut();
+    ref.read(authControllerProvider.notifier).logout();
   }
 
   void navigateToUserProfile(BuildContext context, String uid) {
@@ -56,7 +57,15 @@ class ProfileDrawer extends ConsumerWidget {
                     ThemeMode.dark,
                 onChanged: (value) => toggleTheme(ref),
               ),
-              onTap: () {},
+            ),
+            ListTile(
+              title: const Text('Privacy Policy'),
+              leading: const Icon(
+                Icons.privacy_tip_outlined,
+              ),
+              onTap: () {
+                Routemaster.of(context).push(PrivacyPolicyPage.routName);
+              },
             ),
             ListTile(
               title: const Text('Log Out'),

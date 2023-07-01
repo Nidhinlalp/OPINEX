@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:redite_clone/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +15,7 @@ import '../../../core/typ_def.dart';
 
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
-    firebaseFirestore: ref.read(firestoreProvider),
+    firestore: ref.read(firestoreProvider),
     auth: ref.read(authProvider),
     googleSignIn: ref.read(googleSignInProvider),
   ),
@@ -28,11 +27,11 @@ class AuthRepository {
   final GoogleSignIn _googleSignIn;
 
   AuthRepository({
-    required FirebaseFirestore firebaseFirestore,
+    required FirebaseFirestore firestore,
     required FirebaseAuth auth,
     required GoogleSignIn googleSignIn,
-  })  : _firestore = firebaseFirestore,
-        _auth = auth,
+  })  : _auth = auth,
+        _firestore = firestore,
         _googleSignIn = googleSignIn;
 
   CollectionReference get _users =>
@@ -40,25 +39,37 @@ class AuthRepository {
 
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
-  FutureEither<UserModel> signInwithGoogle(bool isFromLogin) async {
+  FutureEither<UserModel> signInWithGoogle(bool isFromLogin) async {
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      final googleAuth = await googleUser?.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
       UserCredential userCredential;
-      if (isFromLogin) {
-        userCredential = await _auth.signInWithCredential(credential);
-      }else{
-        userCredential = await _auth.currentUser!.linkWithCredential(credential);
+      if (kIsWeb) {
+        GoogleAuthProvider googleProvider = GoogleAuthProvider();
+        googleProvider
+            .addScope('https://www.googleapis.com/auth/contacts.readonly');
+        userCredential = await _auth.signInWithPopup(googleProvider);
+      } else {
+        final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+        final googleAuth = await googleUser?.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+
+        if (isFromLogin) {
+          userCredential = await _auth.signInWithCredential(credential);
+        } else {
+          userCredential =
+              await _auth.currentUser!.linkWithCredential(credential);
+        }
       }
 
       UserModel userModel;
+
       if (userCredential.additionalUserInfo!.isNewUser) {
         userModel = UserModel(
-          name: userCredential.user!.displayName ?? "No Name",
+          name: userCredential.user!.displayName ?? 'No Name',
           profilePic: userCredential.user!.photoURL ?? Constants.avatarDefault,
           banner: Constants.bannerDefault,
           uid: userCredential.user!.uid,
@@ -75,7 +86,6 @@ class AuthRepository {
             'til',
           ],
         );
-        log(userCredential.user!.email.toString());
         await _users.doc(userCredential.user!.uid).set(userModel.toMap());
       } else {
         userModel = await getUserData(userCredential.user!.uid).first;

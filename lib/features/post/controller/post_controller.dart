@@ -88,8 +88,8 @@ class PosCtontroller extends StateNotifier<bool> {
         .read(userProfileControllerProvider.notifier)
         .updateUserKarma(UserKarma.textPost);
     state = false;
-    res.fold((l) => showSnackBar(context, l.message), (r) {
-      showSnackBar(context, 'Posted successfully');
+    res.fold((l) => showSnackBar(context: context, text: l.message), (r) {
+      showSnackBar(context: context, text: 'Posted successfully');
       Routemaster.of(context).pop();
     });
   }
@@ -125,8 +125,8 @@ class PosCtontroller extends StateNotifier<bool> {
         .read(userProfileControllerProvider.notifier)
         .updateUserKarma(UserKarma.linkPost);
     state = false;
-    res.fold((l) => showSnackBar(context, l.message), (r) {
-      showSnackBar(context, 'Posted successfully');
+    res.fold((l) => showSnackBar(context: context, text: l.message), (r) {
+      showSnackBar(context: context, text: 'Posted successfully');
       Routemaster.of(context).pop();
     });
   }
@@ -148,7 +148,8 @@ class PosCtontroller extends StateNotifier<bool> {
       file: file,
     );
 
-    imageRes.fold((l) => showSnackBar(context, l.message), (r) async {
+    imageRes.fold((l) => showSnackBar(context: context, text: l.message),
+        (r) async {
       final Post post = Post(
         id: postId,
         title: title,
@@ -169,8 +170,8 @@ class PosCtontroller extends StateNotifier<bool> {
           .read(userProfileControllerProvider.notifier)
           .updateUserKarma(UserKarma.imagePost);
       state = false;
-      res.fold((l) => showSnackBar(context, l.message), (r) {
-        showSnackBar(context, 'Posted successfully');
+      res.fold((l) => showSnackBar(context: context, text: l.message), (r) {
+        showSnackBar(context: context, text: 'Posted successfully');
         Routemaster.of(context).pop();
       });
     });
@@ -183,7 +184,7 @@ class PosCtontroller extends StateNotifier<bool> {
     return Stream.value([]);
   }
 
-   Stream<List<Post>> fetchGuestPosts() {
+  Stream<List<Post>> fetchGuestPosts() {
     return _postRopository.fetchGuestPosts();
   }
 
@@ -193,7 +194,9 @@ class PosCtontroller extends StateNotifier<bool> {
         .read(userProfileControllerProvider.notifier)
         .updateUserKarma(UserKarma.deletePost);
     res.fold(
-        (l) => null, (r) => showSnackBar(context, 'Post Deleted successfully'));
+        (l) => null,
+        (r) =>
+            showSnackBar(context: context, text: 'Post Deleted successfully'));
   }
 
   void upvote(Post post) async {
@@ -228,7 +231,8 @@ class PosCtontroller extends StateNotifier<bool> {
     _ref
         .read(userProfileControllerProvider.notifier)
         .updateUserKarma(UserKarma.comment);
-    res.fold((l) => showSnackBar(context, l.message), (r) => null);
+    res.fold(
+        (l) => showSnackBar(context: context, text: l.message), (r) => null);
   }
 
   void awardPost({
@@ -240,7 +244,7 @@ class PosCtontroller extends StateNotifier<bool> {
 
     final res = await _postRopository.awardPost(post, award, user.uid);
 
-    res.fold((l) => showSnackBar(context, l.message), (r) {
+    res.fold((l) => showSnackBar(context: context, text: l.message), (r) {
       _ref
           .read(userProfileControllerProvider.notifier)
           .updateUserKarma(UserKarma.awardPost);

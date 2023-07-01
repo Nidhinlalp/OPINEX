@@ -57,7 +57,7 @@ class UserProfileController extends StateNotifier<bool> {
         file: profileFile,
       );
       res.fold(
-        (l) => showSnackBar(context, l.message),
+        (l) => showSnackBar(context: context, text: l.message),
         (r) => user = user.copyWith(profilePic: r),
       );
     }
@@ -70,14 +70,14 @@ class UserProfileController extends StateNotifier<bool> {
         file: bannerFile,
       );
       res.fold(
-        (l) => showSnackBar(context, l.message),
+        (l) => showSnackBar(context: context, text: l.message),
         (r) => user = user.copyWith(banner: r),
       );
     }
     user = user.copyWith(name: name);
     final res = await _userProfileRepository.editProfile(user);
     state = false;
-    res.fold((l) => showSnackBar(context, l.message), (r) {
+    res.fold((l) => showSnackBar(context: context, text: l.message), (r) {
       _ref.read(userProvider.notifier).update((state) => user);
       Routemaster.of(context).pop();
     });
@@ -86,11 +86,13 @@ class UserProfileController extends StateNotifier<bool> {
   Stream<List<Post>> getUserPosts(String uid) {
     return _userProfileRepository.getUserPosts(uid);
   }
-    void updateUserKarma(UserKarma karma) async {
+
+  void updateUserKarma(UserKarma karma) async {
     UserModel user = _ref.read(userProvider)!;
     user = user.copyWith(karma: user.karma + karma.karma);
 
     final res = await _userProfileRepository.updateUserKarma(user);
-    res.fold((l) => null, (r) => _ref.read(userProvider.notifier).update((state) => user));
+    res.fold((l) => null,
+        (r) => _ref.read(userProvider.notifier).update((state) => user));
   }
 }

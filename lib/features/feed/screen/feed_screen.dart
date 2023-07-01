@@ -27,6 +27,8 @@ class FeedScreen extends ConsumerWidget {
                         return PostCard(post: post);
                       },
                     );
+
+                    
                   },
                   error: (error, stackTrace) {
                     return ErrorText(

@@ -10,10 +10,9 @@ import '../../../core/constants/constant.dart';
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
- void signInAsGuest(WidgetRef ref, BuildContext context) {
+  void signInAsGuest(WidgetRef ref, BuildContext context) {
     ref.read(authControllerProvider.notifier).signInAsGuest(context);
   }
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,40 +21,40 @@ class LoginScreen extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
-          Constants.logoPath,
+          Constants.earth,
           height: 40,
         ),
-        actions: [
-          TextButton(
-           onPressed: () => signInAsGuest(ref, context),
-            child: const Text(
-              'Skip',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   // TextButton(
+        //   //  onPressed: () => signInAsGuest(ref, context),
+        //   //   child: const Text(
+        //   //     'Skip',
+        //   //     style: TextStyle(
+        //   //       fontWeight: FontWeight.bold,
+        //   //       fontSize: 18,
+        //   //     ),
+        //   //   ),
+        //   // )
+        // ],
       ),
       body: isLoading
           ? const Loader()
           : Column(
               children: [
                 const SizedBox(height: 30),
-                const Text(
-                  'Dive into anything',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
-                  ),
-                ),
+                // const Text(
+                //   'Dive into anything',
+                //   style: TextStyle(
+                //     fontSize: 24,
+                //     fontWeight: FontWeight.bold,
+                //     letterSpacing: 0.5,
+                //   ),
+                // ),
                 const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
-                    Constants.loginEmotePath,
+                    Constants.newLoge,
                     height: 400,
                   ),
                 ),

@@ -10,7 +10,7 @@ final userProvider = StateProvider<UserModel?>((ref) => null);
 
 final authControllerProvider = StateNotifierProvider<AuthController, bool>(
   (ref) => AuthController(
-    authRepository: ref.read(authRepositoryProvider),
+    authRepository: ref.watch(authRepositoryProvider),
     ref: ref,
   ),
 );
@@ -26,36 +26,32 @@ final getUserDataProvider = StreamProvider.family((ref, String uid) {
 });
 
 class AuthController extends StateNotifier<bool> {
-  final Ref _ref;
   final AuthRepository _authRepository;
-
-  AuthController({
-    required AuthRepository authRepository,
-    required Ref ref,
-  })  : _authRepository = authRepository,
+  final Ref _ref;
+  AuthController({required AuthRepository authRepository, required Ref ref})
+      : _authRepository = authRepository,
         _ref = ref,
-        super(false);
+        super(false); // loading
 
   Stream<User?> get authStateChange => _authRepository.authStateChange;
 
-  void signInwithGoogle(BuildContext context, bool isFromLogin )async {
+  void signInWithGoogle(BuildContext context, bool isFromLogin) async {
     state = true;
-    final user = await _authRepository.signInwithGoogle(isFromLogin);
+    final user = await _authRepository.signInWithGoogle(isFromLogin);
     state = false;
     user.fold(
-      (l) => showSnackBar(context, l.message),
+      (l) => showSnackBar(context: context, text: l.message),
       (userModel) =>
           _ref.read(userProvider.notifier).update((state) => userModel),
     );
   }
 
-  
   void signInAsGuest(BuildContext context) async {
     state = true;
     final user = await _authRepository.signInAsGuest();
     state = false;
     user.fold(
-      (l) => showSnackBar(context, l.message),
+      (l) => showSnackBar(context: context, text: l.message),
       (userModel) =>
           _ref.read(userProvider.notifier).update((state) => userModel),
     );
@@ -65,7 +61,7 @@ class AuthController extends StateNotifier<bool> {
     return _authRepository.getUserData(uid);
   }
 
-  void logOut() async {
+  void logout() async {
     _authRepository.logOut();
   }
 }

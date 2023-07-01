@@ -5,6 +5,7 @@ import 'package:redite_clone/features/community/screen/edite_community_screen.da
 import 'package:redite_clone/features/home/screen/home_screen.dart';
 import 'package:redite_clone/features/post/screen/add_post_type_screen.dart';
 import 'package:redite_clone/features/post/screen/comments_screen.dart';
+import 'package:redite_clone/features/privacy_polycy/screens/privacy.dart';
 import 'package:redite_clone/features/user_profile/screens/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
@@ -46,14 +47,17 @@ final loggedIntRoute = RouteMap(routes: {
           uid: routeData.pathParameters['uid']!,
         ),
       ),
+  '/privacy-policy': (routeData) => const MaterialPage(
+        child: PrivacyPolicyPage(),
+      ),
   '/add-post/:type': (routeData) => MaterialPage(
         child: AddPostTypeScreen(
           type: routeData.pathParameters['type']!,
         ),
       ),
-      '/post/:postId/comments': (route) => MaterialPage(
-          child: CommentsScreen(
-            postId: route.pathParameters['postId']!,
-          ),
+  '/post/:postId/comments': (route) => MaterialPage(
+        child: CommentsScreen(
+          postId: route.pathParameters['postId']!,
         ),
+      ),
 });
