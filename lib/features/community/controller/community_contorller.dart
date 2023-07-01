@@ -98,7 +98,7 @@ class CommunitryController extends StateNotifier<bool> {
     required Community community,
   }) async {
     state = true;
-    if (profileFile != null) {
+    if (profileFile != null || profileWebFile != null) {
       // communities/profile/memes
       final res = await _storageRepository.storeFile(
         path: 'communities/profile',
@@ -112,7 +112,7 @@ class CommunitryController extends StateNotifier<bool> {
       );
     }
 
-    if (bannerFile != null) {
+    if (bannerFile != null || bannerWebFile != null) {
       // communities/banner/memes
       final res = await _storageRepository.storeFile(
         path: 'communities/banner',

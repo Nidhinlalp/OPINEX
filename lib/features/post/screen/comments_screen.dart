@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:redite_clone/resposive/resposive.dart';
 
 import '../../../core/common/error_text.dart';
 import '../../../core/common/loader.dart';
@@ -43,7 +44,7 @@ class _CommentsScreenState extends ConsumerState<CommentsScreen> {
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider)!;
-     final isGuest = !user.isAuthenticated;
+    final isGuest = !user.isAuthenticated;
 
     return Scaffold(
       appBar: AppBar(),
@@ -52,16 +53,21 @@ class _CommentsScreenState extends ConsumerState<CommentsScreen> {
               return Column(
                 children: [
                   PostCard(post: data),
-                  if(!isGuest) 
-                  TextField(
-                    onSubmitted: (val) => addComment(data),
-                    controller: commentController,
-                    decoration: const InputDecoration(
-                      hintText: 'What are your thoughts?',
-                      filled: true,
-                      border: InputBorder.none,
+                  if (!isGuest)
+                    Responsive(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: TextField(
+                          onSubmitted: (val) => addComment(data),
+                          controller: commentController,
+                          decoration: const InputDecoration(
+                            hintText: 'What are your thoughts?',
+                            filled: true,
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
                   ref.watch(getPostCommentsProvider(widget.postId)).when(
                         data: (data) {
                           return Expanded(

@@ -52,7 +52,7 @@ class UserProfileController extends StateNotifier<bool> {
   }) async {
     state = true;
     UserModel user = _ref.read(userProvider)!;
-    if (profileFile != null) {
+    if (profileFile != null || profileWebFile != null) {
       // communities/profile/memes
       final res = await _storageRepository.storeFile(
         path: 'users/profile',
@@ -66,7 +66,7 @@ class UserProfileController extends StateNotifier<bool> {
       );
     }
 
-    if (bannerFile != null) {
+    if (bannerFile != null || bannerWebFile != null) {
       // communities/banner/memes
       final res = await _storageRepository.storeFile(
         path: 'users/banner',

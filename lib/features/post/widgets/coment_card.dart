@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:redite_clone/resposive/resposive.dart';
 
 import '../../../model/comment_meodel.dart';
 
@@ -12,8 +13,8 @@ class CommentCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return 
-       Container(
+    return Responsive(
+      child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 10,
           horizontal: 4,
@@ -59,7 +60,7 @@ class CommentCard extends ConsumerWidget {
             ),
           ],
         ),
-      
+      ),
     );
   }
 }
