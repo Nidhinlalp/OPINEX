@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:redite_clone/core/failure.dart';
 import 'package:redite_clone/core/provider/firebase_provider.dart';
 import 'package:redite_clone/core/typ_def.dart';
@@ -24,14 +24,17 @@ class StorageRepository {
     required String path,
     required String id,
     required File? file,
+    required Uint8List? webFile,
   }) async {
     try {
       final ref = _firebaseStorage.ref().child(path).child(id);
-
-      UploadTask uploadTask = ref.putFile(file!);
-
+      UploadTask uploadTask;
+      if (kIsWeb) {
+        uploadTask = ref.putData(webFile!);
+      } else {
+        uploadTask = ref.putFile(file!);
+      }
       final snapshot = await uploadTask;
-
       return right(await snapshot.ref.getDownloadURL());
     } catch (e) {
       return left(Failure(e.toString()));

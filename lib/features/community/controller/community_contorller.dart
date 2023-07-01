@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:redite_clone/core/failure.dart';
 import 'package:redite_clone/features/auth/controller/auth_controller.dart';
 import 'package:redite_clone/model/community_model.dart';
@@ -91,6 +92,8 @@ class CommunitryController extends StateNotifier<bool> {
   void editCommunity({
     required File? profileFile,
     required File? bannerFile,
+    required Uint8List? profileWebFile,
+    required Uint8List? bannerWebFile,
     required BuildContext context,
     required Community community,
   }) async {
@@ -101,6 +104,7 @@ class CommunitryController extends StateNotifier<bool> {
         path: 'communities/profile',
         id: community.name,
         file: profileFile,
+        webFile: profileWebFile,
       );
       res.fold(
         (l) => showSnackBar(context: context, text: l.message),
@@ -114,6 +118,7 @@ class CommunitryController extends StateNotifier<bool> {
         path: 'communities/banner',
         id: community.name,
         file: bannerFile,
+        webFile: bannerWebFile,
       );
       res.fold(
         (l) => showSnackBar(context: context, text: l.message),

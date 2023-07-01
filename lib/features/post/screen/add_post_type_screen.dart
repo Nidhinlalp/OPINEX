@@ -67,6 +67,7 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
             title: _titleController.text.trim(),
             selectedCommunity: selectedCommunity ?? communities[0],
             file: bannerFile,
+            webFile: bannerWebFile,
           );
     } else if (widget.type == 'text' && _titleController.text.isNotEmpty) {
       ref.read(postControllerProvider.notifier).shareTextPost(

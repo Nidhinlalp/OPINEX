@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:redite_clone/features/auth/controller/auth_controller.dart';
 import 'package:redite_clone/features/user_profile/repository/user_profile_repository.dart';
 import 'package:redite_clone/model/post_model.dart';
@@ -44,6 +45,8 @@ class UserProfileController extends StateNotifier<bool> {
   void editCommunity({
     required File? profileFile,
     required File? bannerFile,
+    required Uint8List? profileWebFile,
+    required Uint8List? bannerWebFile,
     required BuildContext context,
     required String name,
   }) async {
@@ -55,6 +58,7 @@ class UserProfileController extends StateNotifier<bool> {
         path: 'users/profile',
         id: user.uid,
         file: profileFile,
+        webFile: profileWebFile,
       );
       res.fold(
         (l) => showSnackBar(context: context, text: l.message),
@@ -68,6 +72,7 @@ class UserProfileController extends StateNotifier<bool> {
         path: 'users/banner',
         id: user.uid,
         file: bannerFile,
+        webFile: bannerWebFile,
       );
       res.fold(
         (l) => showSnackBar(context: context, text: l.message),

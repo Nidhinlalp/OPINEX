@@ -84,6 +84,8 @@ class _EditeProfileScreenState extends ConsumerState<EditeProfileScreen> {
           profileFile: profileFile,
           bannerFile: bannerFile,
           context: context,
+          bannerWebFile: bannerWebFile,
+          profileWebFile: profileWebFile,
           name: nameController.text.trim(),
         );
   }

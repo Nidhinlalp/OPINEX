@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:redite_clone/core/enums/enums.dart';
 import 'package:redite_clone/features/user_profile/controller/user_profile_controller.dart';
 import 'package:redite_clone/model/comment_meodel.dart';
@@ -131,12 +132,12 @@ class PosCtontroller extends StateNotifier<bool> {
     });
   }
 
-  void shareImagePost({
-    required BuildContext context,
-    required String title,
-    required Community selectedCommunity,
-    required File? file,
-  }) async {
+  void shareImagePost(
+      {required BuildContext context,
+      required String title,
+      required Community selectedCommunity,
+      required File? file,
+      required Uint8List? webFile}) async {
     state = true;
     String postId = const Uuid().v1();
 
@@ -146,6 +147,7 @@ class PosCtontroller extends StateNotifier<bool> {
       path: 'posts/${selectedCommunity.name}',
       id: postId,
       file: file,
+      webFile: webFile,
     );
 
     imageRes.fold((l) => showSnackBar(context: context, text: l.message),
